@@ -2,7 +2,7 @@ name: flutter_moving_background
 description: "A beautiful and animated background"
 version: 0.0.1
 homepage: https://github.com/flutter/flutter
-author: Ildeberto Basconcelos
+author: Ildeberto Vasconcelos
 
 environment:
   sdk: '>=3.2.4 <4.0.0'
