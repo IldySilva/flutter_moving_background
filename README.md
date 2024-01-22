@@ -15,11 +15,12 @@ TODO: A package that helps you to set a beautiful moving background to your app
 
 # To be implemented
 
-- [ ] Follow Cursor
+- [ ] Follow Cursor (web only)
 - [ ] Customize Circles
 - [ ] Add More Shapes
 - [ ] Paused or Moving Option
 - [ ] On Background Tap Effects
+- [ ] Particles Background
 
 ## Supported Platforms
 
