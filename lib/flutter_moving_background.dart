@@ -15,11 +15,11 @@ class MovingBackground extends StatelessWidget {
   /// The [backgroundColor] is the color of the background, defaulting to white if not provided.
   /// The [circles] is a list of [MovingCircle] widgets that define the circles on the background.
   const MovingBackground({
-    Key? key,
+    super.key,
     this.child,
     this.backgroundColor,
     required this.circles,
-  }) : super(key: key);
+  });
 
   /// The child widget to be placed on top of the moving background.
   final Widget? child;

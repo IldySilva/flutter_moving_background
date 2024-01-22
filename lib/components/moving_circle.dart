@@ -11,12 +11,12 @@ class MovingCircle extends StatefulWidget {
   /// The [blurSigma] is the sigma value for the blur effect, defaulting to 40.
   /// The [duration] is the duration of the animation, defaulting to 15 seconds.
   const MovingCircle({
-    Key? key,
+    super.key,
     required this.color,
     this.radius = 500,
     this.blurSigma = 40,
     this.duration = const Duration(seconds: 15),
-  }) : super(key: key);
+  });
 
   /// The color of the circle.
   final Color color;
