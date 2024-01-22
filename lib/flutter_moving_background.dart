@@ -1,11 +1,11 @@
 /// A Flutter library for creating a moving background with customizable circles.
 library flutter_moving_background;
 
-export 'components/circle.dart';
+export 'components/moving_circle.dart';
 
 import 'package:flutter/material.dart';
 
-import 'components/circle.dart';
+import 'components/moving_circle.dart';
 
 /// A widget representing a moving background with customizable circles.
 class MovingBackground extends StatelessWidget {
