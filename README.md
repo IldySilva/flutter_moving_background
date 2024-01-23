@@ -4,7 +4,6 @@ TODO: A package that helps you to set a beautiful moving background to your app
 
 <video>
   <source src="gifs/example.webm" type="video/webm">
-  Your browser does not support the video tag.
 </video>
 
 ## Features
