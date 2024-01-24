@@ -1,7 +1,9 @@
 
 
 See an Example here : https://movingbg.netlify.app/
+
 ![Example GIF](gifs/example.gif)
+
 ## Features
 
 - [X] customizable moving circles
