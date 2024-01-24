@@ -1,11 +1,7 @@
 
 
-TODO: A package that helps you to set a beautiful moving background to your app
-
-<video>
-  <source src="gifs/example.webm" type="video/webm">
-</video>
-
+See an Example here : https://movingbg.netlify.app/
+![Example GIF](gifs/example.gif)
 ## Features
 
 - [X] customizable moving circles
@@ -14,7 +10,7 @@ TODO: A package that helps you to set a beautiful moving background to your app
 
 # To be implemented
 
-- [ ] Follow Cursor (web only)
+- [ ] React Cursor Position (web only)
 - [ ] Customize Circles
 - [ ] Add More Shapes
 - [ ] Paused or Moving Option
@@ -35,7 +31,7 @@ In your flutter project add the dependency:
 
 ```yaml
 dependencies:
-  flutter_moving_background: any
+  flutter_moving_background: ^0.0.3
 ```
 
 Import the package:

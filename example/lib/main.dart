@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Moving  Background',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white70),
           useMaterial3: true,
         ),
         home: const App());
@@ -41,6 +41,8 @@ class _AppState extends State<App> {
         MovingCircle(color: Colors.deepPurple),
         MovingCircle(color: Colors.orange),
         MovingCircle(color: Colors.orangeAccent),
+        MovingCircle(color: Colors.white12),
+
       ],
       child: Center(
         child: Card(
