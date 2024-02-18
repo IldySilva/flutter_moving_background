@@ -1,5 +1,6 @@
-## [0.0.3] - 2024-02-16
+## [0.0.3] - 2024-02-18
 
+* Add mixed animation type,fade and Transition
 * Upgrade dart and Flutter SDKs
 
 ## [0.0.3] - 2024-01-22
