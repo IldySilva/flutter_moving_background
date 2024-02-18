@@ -1,0 +1,6 @@
+enum AnimationType{
+
+  translation,
+  mixed,
+
+}

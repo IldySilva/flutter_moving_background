@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_moving_background/enums/animation_types.dart';
 import 'package:flutter_moving_background/flutter_moving_background.dart';
 
 void main() {
@@ -35,7 +36,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: MovingBackground(
-
+      animationType: AnimationType.mixed,
+      duration: const Duration(seconds: 1),
       backgroundColor: darkMode ? Colors.black87 : Colors.white,
       circles: const [
         MovingCircle(color: Colors.purple),
@@ -43,7 +45,6 @@ class _AppState extends State<App> {
         MovingCircle(color: Colors.orange),
         MovingCircle(color: Colors.orangeAccent),
         MovingCircle(color: Colors.white12),
-
       ],
       child: Center(
         child: Card(

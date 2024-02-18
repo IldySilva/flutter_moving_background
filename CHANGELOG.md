@@ -1,3 +1,7 @@
+## [0.0.3] - 2024-02-16
+
+* Upgrade dart and Flutter SDKs
+
 ## [0.0.3] - 2024-01-22
 
 * Follow Dart lint rules
