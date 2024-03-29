@@ -28,7 +28,6 @@ class MovingCircle extends StatefulWidget {
   /// The sigma value for the blur effect.
   final double blurSigma;
 
-
   @override
   State<MovingCircle> createState() => _MovingCircleState();
 }
@@ -57,12 +56,13 @@ class _MovingCircleState extends State<MovingCircle>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: StateController.instance.duration, // Adjust the duration as needed
+      duration:
+          StateController.instance.duration, // Adjust the duration as needed
     )..repeat(reverse: true);
 
-    _fadeController =
-        AnimationController(duration: StateController.instance.duration, vsync: this)
-          ..repeat(reverse: true);
+    _fadeController = AnimationController(
+        duration: StateController.instance.duration, vsync: this)
+      ..repeat(reverse: true);
     _animation = Tween<Offset>(
       begin: const Offset(2.5, 0),
       end: const Offset(2.5 * pi, 0),
@@ -73,15 +73,23 @@ class _MovingCircleState extends State<MovingCircle>
         CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
 
     super.initState();
+    // Execute after the first frame has been rendered
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      calculate();
+    });
+  }
+
+  void calculate() {
+    setState(() {
+      screenWidth = MediaQuery.of(context).size.width;
+      screenHeight = MediaQuery.of(context).size.height;
+      randomX = random.nextDouble() * screenWidth;
+      randomY = random.nextDouble() * screenHeight;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-    randomX = random.nextDouble() * screenWidth;
-    randomY = random.nextDouble() * screenHeight;
-
     return StateController.instance.animationType == AnimationType.mixed
         ? AnimatedBuilder(
             animation: _fadeController,
@@ -89,14 +97,18 @@ class _MovingCircleState extends State<MovingCircle>
               return AnimatedPositioned(
                 top: randomX +
                     cos(_animation.value.dx + randomX) * screenWidth * 0.5,
-                left:     randomY +
+                left: randomY +
                     sin(_animation.value.dx + randomY) * screenHeight * 0.5,
-                duration:StateController.instance.duration??const Duration(seconds: 1),
+                duration: StateController.instance.duration ??
+                    const Duration(seconds: 1),
                 child: FadeTransition(
                   opacity: _fadeAnimation,
                   child: CustomPaint(
-                    painter: CirclesPainter(_controller.value,
-                        color: widget.color, blurSigma: widget.blurSigma),
+                    painter: CirclesPainter(
+                      _controller.value,
+                      color: widget.color,
+                      blurSigma: widget.blurSigma,
+                    ),
                     size: Size(widget.radius, widget.radius),
                   ),
                 ),
@@ -114,8 +126,11 @@ class _MovingCircleState extends State<MovingCircle>
                       sin(_animation.value.dx + randomY) * screenHeight * 0.5,
                 ),
                 child: CustomPaint(
-                  painter: CirclesPainter(_controller.value,
-                      color: widget.color, blurSigma: widget.blurSigma),
+                  painter: CirclesPainter(
+                    _controller.value,
+                    color: widget.color,
+                    blurSigma: widget.blurSigma,
+                  ),
                   size: Size(widget.radius, widget.radius),
                 ),
               );
