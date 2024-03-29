@@ -36,49 +36,49 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: MovingBackground(
-      animationType: AnimationType.mixed,
-      duration: const Duration(seconds: 1),
-      backgroundColor: darkMode ? Colors.black87 : Colors.white,
-      circles: const [
-        MovingCircle(color: Colors.purple),
-        MovingCircle(color: Colors.deepPurple),
-        MovingCircle(color: Colors.orange),
-        MovingCircle(color: Colors.orangeAccent),
-        MovingCircle(color: Colors.white12),
-      ],
-      child: Center(
-        child: Card(
-          color: Colors.white.withOpacity(0.7),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "M O V I N G ",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                ),
-                const Text("B a c k g r o u n d "),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  color: Colors.white,
-                  width: 300,
-                  height: 1,
-                ),
-                Row(
+          animationType: AnimationType.translation,
+          backgroundColor: darkMode ? Colors.black87 : Colors.white,
+          circles: const [
+            MovingCircle(color: Colors.purple),
+            MovingCircle(color: Colors.deepPurple),
+            MovingCircle(color: Colors.orange),
+            MovingCircle(color: Colors.orangeAccent),
+            MovingCircle(color: Colors.white12),
+          ],
+          child: Center(
+            child: Card(
+              color: Colors.white.withOpacity(0.7),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text("Dark Mode:"),
-                    Switch(
-                        value: darkMode,
-                        onChanged: (v) => setState(() => darkMode = v)),
+                    const Text(
+                      "M O V I N G ",
+                      style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
+                    const Text("B a c k g r o u n d "),
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      color: Colors.white,
+                      width: 300,
+                      height: 1,
+                    ),
+                    const TextField(),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text("Dark Mode:"),
+                        Switch(
+                            value: darkMode,
+                            onChanged: (v) => setState(() => darkMode = v)),
+                      ],
+                    )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 }

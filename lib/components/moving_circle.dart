@@ -52,6 +52,9 @@ class _MovingCircleState extends State<MovingCircle>
     super.dispose();
   }
 
+
+  double dx=2.5;
+  var dx2=2.7;
   @override
   void initState() {
     _controller = AnimationController(
@@ -64,8 +67,8 @@ class _MovingCircleState extends State<MovingCircle>
         duration: StateController.instance.duration, vsync: this)
       ..repeat(reverse: true);
     _animation = Tween<Offset>(
-      begin: const Offset(2.5, 0),
-      end: const Offset(2.5 * pi, 0),
+      begin:  Offset(dx, 0),
+      end:  Offset(dx2 * pi, 0),
     ).animate(
         CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
 
@@ -75,8 +78,10 @@ class _MovingCircleState extends State<MovingCircle>
     super.initState();
     // Execute after the first frame has been rendered
     WidgetsBinding.instance.addPostFrameCallback((_) {
+
       calculate();
     });
+
   }
 
   void calculate() {
@@ -94,6 +99,8 @@ class _MovingCircleState extends State<MovingCircle>
         ? AnimatedBuilder(
             animation: _fadeController,
             builder: (context, child) {
+              print("Random N");
+              print(_animation.value);
               return AnimatedPositioned(
                 top: randomX +
                     cos(_animation.value.dx + randomX) * screenWidth * 0.5,

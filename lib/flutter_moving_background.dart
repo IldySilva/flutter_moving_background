@@ -2,8 +2,9 @@
 library flutter_moving_background;
 
 export 'components/moving_circle.dart';
+export 'rain_background.dart';
 
-
+export 'rain_custom_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_moving_background/enums/animation_types.dart';
 
@@ -46,6 +47,8 @@ class MovingBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     StateController.instance.init(this);
     return ColoredBox(
       color: backgroundColor ?? Colors.white,
