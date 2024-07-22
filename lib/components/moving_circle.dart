@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_moving_background/enums/animation_types.dart';
 import '../controller.dart';
 import '../painters/circles_painter.dart';
 
@@ -34,10 +33,8 @@ class MovingCircle extends StatefulWidget {
 }
 
 class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMixin {
-  late AnimationController _controller;
   late AnimationController _fadeController;
 
-  late Animation<Offset> _animation;
   late Animation<double> _fadeAnimation;
   final Random random = Random();
 
@@ -48,28 +45,15 @@ class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMix
 
   @override
   void dispose() {
-    _controller.dispose();
     _fadeController.dispose();
-
     super.dispose();
   }
 
-  double dx = 2.5;
-  var dx2 = 2.7;
+
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: StateController.instance.duration,
-    )..repeat(reverse: true);
-
     _fadeController = AnimationController(duration: StateController.instance.duration, vsync: this)
       ..repeat(reverse: true);
-    _animation = Tween<Offset>(
-      begin: Offset(dx * pi, 0),
-      end: Offset(dx2 * pi, 0),
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
-
     _fadeAnimation = CurvedAnimation(parent: _fadeController, curve: Curves.easeIn)..addStatusListener((status) {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -81,7 +65,7 @@ class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMix
   }
 
   void _startAnimation() {
-    Timer.periodic(_controller.duration!, (timer) {
+    Timer.periodic(_fadeController.duration!, (timer) {
       setState(() {
         randomY = random.nextDouble() * screenWidth;
         randomX = random.nextDouble() * screenHeight;
@@ -99,7 +83,7 @@ class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMix
         opacity: _fadeAnimation,
         child: CustomPaint(
           painter: CirclesPainter(
-            _controller.value,
+            _fadeController.value,
             color: widget.color,
             blurSigma: widget.blurSigma,
           ),
