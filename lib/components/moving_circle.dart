@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,8 @@ class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMix
   @override
   void dispose() {
     _controller.dispose();
+    _fadeController.dispose();
+
     super.dispose();
   }
 
@@ -57,7 +60,7 @@ class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMix
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: StateController.instance.duration, // Adjust the duration as needed
+      duration: StateController.instance.duration,
     )..repeat(reverse: true);
 
     _fadeController = AnimationController(duration: StateController.instance.duration, vsync: this)
@@ -67,43 +70,44 @@ class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMix
       end: Offset(dx2 * pi, 0),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
 
-    _fadeAnimation = CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
+    _fadeAnimation = CurvedAnimation(parent: _fadeController, curve: Curves.easeIn)..addStatusListener((status) {});
 
     super.initState();
-    // Execute after the first frame has been rendered
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      calculate();
-    });
-  }
 
-  void calculate() {
-    setState(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       screenWidth = MediaQuery.of(context).size.width;
       screenHeight = MediaQuery.of(context).size.height;
-      randomX = random.nextDouble() * screenWidth;
-      randomY = random.nextDouble() * screenHeight;
+    });
+
+  }
+
+  void _startAnimation() {
+    Timer.periodic(_controller.duration!, (timer) {
+      setState(() {
+        randomY = random.nextDouble() * screenHeight;
+        randomX = random.nextDouble() * screenWidth;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     if (StateController.instance.animationType == AnimationType.fades) {
-      return AnimatedBuilder(
-        animation: _fadeController,
-        builder: (context, child) {
-          return FadeTransition(
-
-            opacity: _fadeAnimation,
-            child: CustomPaint(
-              painter: CirclesPainter(
-                _controller.value,
-                color: widget.color,
-                blurSigma: widget.blurSigma,
-              ),
-              size: Size(widget.radius, widget.radius),
+      return AnimatedPositioned(
+        left: randomX,
+        top: randomY,
+        duration: _fadeController.duration!,
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: CustomPaint(
+            painter: CirclesPainter(
+              _controller.value,
+              color: widget.color,
+              blurSigma: widget.blurSigma,
             ),
-          );
-        },
+            size: Size(widget.radius, widget.radius),
+          ),
+        ),
       );
     }
 

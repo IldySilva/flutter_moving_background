@@ -41,10 +41,10 @@ class _AppState extends State<App> {
           backgroundColor: darkMode ? Colors.black87 : Colors.white,
           circles: const [
             MovingCircle(color: Colors.purple),
-            MovingCircle(color: Colors.deepPurple),
-            MovingCircle(color: Colors.orange),
-            MovingCircle(color: Colors.orangeAccent),
-            MovingCircle(color: Colors.white12),
+            MovingCircle(color: Colors.blueAccent),
+            MovingCircle(color: Colors.grey),
+            MovingCircle(color: Colors.lightBlue),
+
           ],
           child: Center(
             child: Card(
