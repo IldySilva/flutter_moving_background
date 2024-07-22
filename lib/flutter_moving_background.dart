@@ -23,7 +23,7 @@ class MovingBackground extends StatelessWidget {
     super.key,
     this.child,
     this.backgroundColor,
-    this.animationType=AnimationType.mixed,
+    this.animationType=AnimationType.moveAndFade,
     this.duration=const Duration(seconds: 15),
     required this.circles,
   });
@@ -47,8 +47,6 @@ class MovingBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     StateController.instance.init(this);
     return ColoredBox(
       color: backgroundColor ?? Colors.white,
