@@ -36,7 +36,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: MovingBackground(
-          animationType: AnimationType.translation,
+          duration: const Duration(seconds: 1),
+          animationType: AnimationType.fades,
           backgroundColor: darkMode ? Colors.black87 : Colors.white,
           circles: const [
             MovingCircle(color: Colors.purple),

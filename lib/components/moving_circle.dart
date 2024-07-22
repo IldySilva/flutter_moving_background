@@ -32,8 +32,7 @@ class MovingCircle extends StatefulWidget {
   State<MovingCircle> createState() => _MovingCircleState();
 }
 
-class _MovingCircleState extends State<MovingCircle>
-    with TickerProviderStateMixin {
+class _MovingCircleState extends State<MovingCircle> with TickerProviderStateMixin {
   late AnimationController _controller;
   late AnimationController _fadeController;
 
@@ -52,36 +51,29 @@ class _MovingCircleState extends State<MovingCircle>
     super.dispose();
   }
 
-
-  double dx=2.5;
-  var dx2=2.7;
+  double dx = 2.5;
+  var dx2 = 2.7;
   @override
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration:
-          StateController.instance.duration, // Adjust the duration as needed
+      duration: StateController.instance.duration, // Adjust the duration as needed
     )..repeat(reverse: true);
 
-    _fadeController = AnimationController(
-        duration: StateController.instance.duration, vsync: this)
+    _fadeController = AnimationController(duration: StateController.instance.duration, vsync: this)
       ..repeat(reverse: true);
     _animation = Tween<Offset>(
-      begin:  Offset(dx, 0),
-      end:  Offset(dx2 * pi, 0),
-    ).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+      begin: Offset(dx, 0),
+      end: Offset(dx2 * pi, 0),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
 
-    _fadeAnimation =
-        CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
+    _fadeAnimation = CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
 
     super.initState();
     // Execute after the first frame has been rendered
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       calculate();
     });
-
   }
 
   void calculate() {
@@ -95,53 +87,44 @@ class _MovingCircleState extends State<MovingCircle>
 
   @override
   Widget build(BuildContext context) {
-    return StateController.instance.animationType == AnimationType.mixed
-        ? AnimatedBuilder(
-            animation: _fadeController,
-            builder: (context, child) {
-              print("Random N");
-              print(_animation.value);
-              return AnimatedPositioned(
-                top: randomX +
-                    cos(_animation.value.dx + randomX) * screenWidth * 0.5,
-                left: randomY +
-                    sin(_animation.value.dx + randomY) * screenHeight * 0.5,
-                duration: StateController.instance.duration ??
-                    const Duration(seconds: 1),
-                child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: CustomPaint(
-                    painter: CirclesPainter(
-                      _controller.value,
-                      color: widget.color,
-                      blurSigma: widget.blurSigma,
-                    ),
-                    size: Size(widget.radius, widget.radius),
-                  ),
-                ),
-              );
-            },
-          )
-        : AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return Transform.translate(
-                offset: Offset(
-                  randomX +
-                      cos(_animation.value.dx + randomX) * screenWidth * 0.5,
-                  randomY +
-                      sin(_animation.value.dx + randomY) * screenHeight * 0.5,
-                ),
-                child: CustomPaint(
-                  painter: CirclesPainter(
-                    _controller.value,
-                    color: widget.color,
-                    blurSigma: widget.blurSigma,
-                  ),
-                  size: Size(widget.radius, widget.radius),
-                ),
-              );
-            },
+    if (StateController.instance.animationType == AnimationType.fades) {
+      return AnimatedBuilder(
+        animation: _fadeController,
+        builder: (context, child) {
+          return FadeTransition(
+
+            opacity: _fadeAnimation,
+            child: CustomPaint(
+              painter: CirclesPainter(
+                _controller.value,
+                color: widget.color,
+                blurSigma: widget.blurSigma,
+              ),
+              size: Size(widget.radius, widget.radius),
+            ),
           );
+        },
+      );
+    }
+
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(
+            randomX + cos(_animation.value.dx + randomX) * screenWidth * 0.5,
+            randomY + sin(_animation.value.dx + randomY) * screenHeight * 0.5,
+          ),
+          child: CustomPaint(
+            painter: CirclesPainter(
+              _controller.value,
+              color: widget.color,
+              blurSigma: widget.blurSigma,
+            ),
+            size: Size(widget.radius, widget.radius),
+          ),
+        );
+      },
+    );
   }
 }

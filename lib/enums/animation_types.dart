@@ -2,5 +2,5 @@ enum AnimationType{
 
   translation,
   mixed,
-  rain,
+  rain, fades,
 }
