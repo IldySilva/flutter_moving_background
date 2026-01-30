@@ -1,6 +1,6 @@
 name: flutter_moving_background
 description: "A Flutter Package to create beautiful and animated  backgrounds,such as gradients ,circular forms and  particles"
-version: 0.0.5
+version: 0.1.0
 homepage: https://github.com/IldySilva/flutter_moving_background
 repository: https://github.com/IldySilva/flutter_moving_background.git
 issue_tracker: https://github.com/IldySilva/flutter_moving_background/issues
@@ -13,9 +13,6 @@ topics:
 environment:
   sdk: '>=3.3.0 <4.0.0'
   flutter: ">=1.17.0"
-
-
-
 
 dependencies:
   flutter:
