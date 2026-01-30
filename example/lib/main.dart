@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_moving_background/enums/animation_types.dart';
 import 'package:flutter_moving_background/flutter_moving_background.dart';
 
 void main() {
@@ -36,20 +35,19 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: MovingBackground(
-          duration: const Duration(seconds: 2),
+          duration: const Duration(seconds: 3),
           animationType: AnimationType.moveAndFade,
           backgroundColor: darkMode ? Colors.black87 : Colors.white,
-          circles: const [
-            MovingCircle(color: Colors.purple,),
-            MovingCircle(color: Colors.blueAccent),
-            MovingCircle(color: Colors.grey),
-            MovingCircle(color: Colors.lightBlue),
+          circles:  [
+            MovingCircle(color: Colors.purple.shade100),
+            MovingCircle(color: Colors.blueAccent.shade100),
+            MovingCircle(color: Colors.lightBlue.shade200),
           ],
           child: Center(
-            child: Card(
-              color: Colors.white.withOpacity(0.7),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Card(
+                color: Colors.white.withAlpha(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -58,12 +56,6 @@ class _AppState extends State<App> {
                       style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                     ),
                     const Text("B a c k g r o u n d "),
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      color: Colors.white,
-                      width: 300,
-                      height: 1,
-                    ),
                     const TextField(),
                     Row(
                       mainAxisSize: MainAxisSize.min,

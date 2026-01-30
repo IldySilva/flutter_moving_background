@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_moving_background/flutter_moving_background.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../lib/flutter_moving_background.dart';
 
 void main() {
   testWidgets('MovingBackground renders correctly', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
     await tester.pumpWidget(
       const MaterialApp(
         home: MovingBackground(
           backgroundColor: Colors.blue,
           circles: [
             MovingCircle(radius: 20.0, color: Colors.red),
+            MovingCircle(radius: 30.0, color: Colors.green),
           ],
         ),
       ),
@@ -18,16 +19,70 @@ void main() {
 
     // Verify that MovingBackground renders correctly.
     expect(find.byType(MovingBackground), findsOneWidget);
-    expect(find.byType(ColoredBox), findsOneWidget);
-    expect(find.byType(Stack), findsOneWidget);
+    
+    // Verify the background color is applied via ColoredBox
+    final coloredBox = tester.widget<ColoredBox>(find.byType(ColoredBox));
+    expect(coloredBox.color, Colors.blue);
 
-    // Verify the presence of MovingCircle widgets.
-    expect(find.byType(MovingCircle), findsNWidgets(1)); // Adjust the count based on your actual circles count.
+    // Verify the presence of CustomPaint which draws the circles
+    expect(find.byType(CustomPaint), findsOneWidget);
+  });
 
-    // You can also add more specific assertions based on your widget's behavior.
-    // For example, check if the background color is applied correctly.
+  testWidgets('MovingBackground respects isPaused', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MovingBackground(
+          isPaused: true,
+          circles: [
+            MovingCircle(color: Colors.red),
+          ],
+        ),
+      ),
+    );
 
-    // Cleanup after the test.
-    tester.pump();
+    expect(find.byType(MovingBackground), findsOneWidget);
+    // In a real scenario, we'd check if the Ticker is not active, 
+    // but testing Tickers directly in widget tests is complex.
+    // This test ensures the widget builds without errors when paused.
+  });
+
+  testWidgets('RainBackground renders correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+       MaterialApp(
+        home: RainBackground(
+          numberOfDrops: 50,
+          colors: [Colors.blue],
+        ),
+      ),
+    );
+
+    expect(find.byType(RainBackground), findsOneWidget);
+    expect(find.byType(CustomPaint), findsOneWidget);
+  });
+
+  testWidgets('BubbleBackground renders correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: BubbleBackground(
+          numBubbles: 5,
+        ),
+      ),
+    );
+
+    expect(find.byType(BubbleBackground), findsOneWidget);
+    expect(find.byType(CustomPaint), findsOneWidget);
+  });
+
+  testWidgets('MovingBackground handles child widget', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: MovingBackground(
+          circles: [],
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+
+    expect(find.text('Hello World'), findsOneWidget);
   });
 }

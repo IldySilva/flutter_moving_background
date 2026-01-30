@@ -1,6 +1,0 @@
-enum AnimationType{
-
-
-  moveAndFade,
-
-}

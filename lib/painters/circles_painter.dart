@@ -1,47 +1,75 @@
 import 'package:flutter/material.dart';
+import '../components/moving_circle.dart';
+import '../animation_types.dart';
 
-/// Custom painter class for drawing a circle with animation.
-class CirclesPainter extends CustomPainter {
-  /// The current value of the animation.
-  final double animationValue;
+/// Internal state for a circle being animated.
+class CircleState {
+  CircleState({
+    required this.config,
+    required this.currentPos,
+    required this.targetPos,
+    required this.startPos,
+  });
 
-  /// The color of the circle.
-  Color color;
+  final MovingCircle config;
+  Offset currentPos;
+  Offset targetPos;
+  Offset startPos;
+  double progress = 0.0;
+}
 
-  /// The sigma value for the blur effect.
-  double blurSigma;
+/// Custom painter class for drawing multiple moving circles.
+class MovingCirclesPainter extends CustomPainter {
+  final List<CircleState> circles;
+  final Listenable repaint;
+  final AnimationType animationType;
 
-  /// Constructor for the CirclesPainter.
-  ///
-  /// The [animationValue] represents the current value of the animation (0.0 to 1.0).
-  /// The [color] is the color of the circle, and [blurSigma] is the sigma value for the blur effect.
-  CirclesPainter(this.animationValue, {required this.color, this.blurSigma = 30});
+  MovingCirclesPainter({
+    required this.circles,
+    required this.repaint,
+    required this.animationType,
+  }) : super(repaint: repaint);
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Create a paint object with the specified color and style.
-    final Paint paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
+    final Paint paint = Paint()..style = PaintingStyle.fill;
 
-    // Calculate the radius of the circle based on the width of the provided size.
-    final double radius = size.width / 2;
+    for (final circle in circles) {
+      paint.color = circle.config.color;
+      paint.maskFilter = MaskFilter.blur(BlurStyle.normal, circle.config.blurSigma);
 
-    // Calculate the x-coordinate offset based on the animation value.
-    final double xOffset = size.width * animationValue;
-    final Offset center = Offset(xOffset, size.height / 2);
+      double opacity = 1.0;
+      double radiusMultiplier = 1.0;
 
-    // Apply a blur effect to the paint object.
-    paint.maskFilter = MaskFilter.blur(BlurStyle.normal, blurSigma);
+      switch (animationType) {
+        case AnimationType.moveAndFade:
+          opacity = (1.0 - (2.0 * circle.progress - 1.0).abs()).clamp(0.0, 1.0);
+          break;
+        case AnimationType.pulse:
+          // Pulse radius and opacity
+          radiusMultiplier = 0.8 + (0.4 * (1.0 - (2.0 * circle.progress - 1.0).abs()));
+          opacity = 0.6 + (0.4 * (1.0 - (2.0 * circle.progress - 1.0).abs()));
+          break;
+        case AnimationType.scale:
+          // Scale from 0 to 1 and back
+          radiusMultiplier = (1.0 - (2.0 * circle.progress - 1.0).abs());
+          break;
+        case AnimationType.move:
+          // Just move, constant opacity
+          opacity = 1.0;
+          break;
+      }
 
-    // Draw the circle on the canvas at the specified center with the calculated radius.
-    canvas.drawCircle(center, radius, paint);
+      paint.color = circle.config.color.withOpacity(opacity);
+
+      canvas.drawCircle(
+        circle.currentPos,
+        (circle.config.radius / 2) * radiusMultiplier,
+        paint,
+      );
+    }
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    // Return false to indicate that the painting should not be repainted
-    // unless the properties of this painter change.
-    return false;
-  }
+  bool shouldRepaint(covariant MovingCirclesPainter oldDelegate) => true;
 }
