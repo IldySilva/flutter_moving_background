@@ -1,3 +1,13 @@
+## [0.5.0] - 2026-11-18
+
+* **Toolchain upgrade**: Now targets Flutter 3.50 / Dart 3.14. Minimum requirements raised to Flutter `>=3.47.0` and Dart `^3.13.0`.
+* **Material migration**: Replaced the deprecated `package:flutter/material.dart` import with the standalone `material_ui` package (new dependency `material_ui: ^1.11.1`). The public API is unchanged.
+* **Lints**: Upgraded `flutter_lints` to `^6.0.0` and applied the resulting fixes.
+* **Dependencies**: Refreshed all dependencies to their latest compatible versions.
+* **Example app**:
+    * Fixed the iOS build on recent Xcode versions by raising the iOS deployment target to 15.0 for the app and all CocoaPods targets.
+    * Migrated to `material_ui` and `flutter_lints ^6.0.0`.
+
 ## [0.3.0] - 2026-06-18
 
 * **New Presets**: Added pre-configured named constructors for `MovingBackground` (`MovingBackground.sunset()`, `MovingBackground.aurora()`, `MovingBackground.cyberpunk()`) and a builder-based theme-aware `MovingBackground.themed(context)` constructor.

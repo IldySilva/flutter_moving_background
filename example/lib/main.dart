@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_moving_background/flutter_moving_background.dart';
 
 void main() {
@@ -244,7 +244,7 @@ class _AppState extends State<App> {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: BackgroundStyle.values.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  separatorBuilder: (_, _) => const SizedBox(width: 8),
                   itemBuilder: (context, index) {
                     final style = BackgroundStyle.values[index];
                     final isSelected = style == _selectedStyle;

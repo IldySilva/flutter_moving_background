@@ -1,5 +1,5 @@
 /// A Flutter library for creating a moving background with customizable circles.
-library flutter_moving_background;
+library;
 
 export 'components/moving_circle.dart';
 export 'components/bubble_background.dart';
@@ -10,7 +10,7 @@ export 'rain_custom_background.dart';
 export 'animation_types.dart';
 
 import 'dart:math';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 import 'components/moving_circle.dart';
 import 'painters/circles_painter.dart';
